@@ -29,17 +29,18 @@ public class PersonaBean implements Serializable {
     private List<Persona> list;
     private List<Persona> filter;
     private Persona persona;
+    private Persona selected;
 
     private int temp;
 
     private Date fecha_actual;
 
     @PostConstruct
-    public void initPersona() {        
+    public void initPersona() {
         fecha_actual = new Date();
     }
 
-    public String newPersona() {        
+    public String newPersona() {
         persona = new Persona();
         return "/rrhh/persona_form?faces-redirect=true";
     }
@@ -68,6 +69,36 @@ public class PersonaBean implements Serializable {
             persona = new Persona();
 
             dir = "/rrhh/persona_list?faces-redirect=true";
+        } catch (Exception e) {
+            dir = "/templates/error.xhtml";
+        }
+        return dir;
+    }
+    
+        public String update() {
+        System.out.println("ar.com.rcm.rrhh.PersonaBean.update()");
+        String dir = "";
+        try {
+
+            daoPersona.edit(persona);
+            list = daoPersona.findAll();
+            persona = new Persona();
+
+            dir = "/rrhh/persona_list?faces-redirect=true";
+        } catch (Exception e) {
+            dir = "/templates/error.xhtml";
+        }
+        return dir;
+    }
+
+    public String view() {
+        System.out.println("ar.com.rcm.rrhh.PersonaBean.view()");
+        String dir = "";
+        try {
+
+            this.persona = this.selected;
+
+            dir = "/rrhh/persona_view?faces-redirect=true";
         } catch (Exception e) {
             dir = "/templates/error.xhtml";
         }
@@ -109,6 +140,13 @@ public class PersonaBean implements Serializable {
     public void setTemp(int temp) {
         this.temp = temp;
     }
-    
+
+    public Persona getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Persona selected) {
+        this.selected = selected;
+    }
 
 }

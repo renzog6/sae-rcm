@@ -11,7 +11,8 @@
         <f:view>
             <h:form>
 
-                <p:dataTable value="#{dtPersonaBean.list}" var="item">
+                <p:dataTable value="#{dtPersonaBean.list}" var="item" 
+                             selectionMode="single" selection="#{dtPersonaBean.selected}" rowKey="#{item.idPersona}">
 
                     <f:facet name="header">
                         Lista de Personas.
@@ -65,11 +66,8 @@
                         <h:outputText value="#{item.estadoCivil.nombre}"/>
                     </p:column>
 
-
                     <p:column headerText="Ver" style="width:35px;text-align: center">
-                        <p:commandButton icon="ui-icon-pencil" title="Editar">
-                            <f:setPropertyActionListener value="#" target="#" />
-                        </p:commandButton>
+                        <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{dtPersonaBean.view()}" />                                                    
                     </p:column>
 
                 </p:dataTable>
